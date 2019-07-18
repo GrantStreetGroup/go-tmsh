@@ -159,8 +159,11 @@ func (conn *sshConn) Recv(suffix string) ([]byte, error) {
 			return nil, err
 		}
 		result.Write(buff[:n])
-		if err == io.EOF || bytes.HasSuffix(buff[:n], []byte(suffix)) {
-			break
+		buff_fields := bytes.Fields(buff[:n])
+		if len(buff_fields) > 0 {
+			if err == io.EOF || bytes.HasSuffix(append(buff_fields[len(buff_fields)-1], ' '), []byte(suffix)) {
+				break
+			}
 		}
 	}
 	return result.Bytes(), nil
