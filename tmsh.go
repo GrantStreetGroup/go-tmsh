@@ -85,6 +85,9 @@ func (bigip *BigIP) ExecuteCommand(cmd string) (string, error) {
 
 		if strings.HasPrefix(line, "Last login:") ||
 			strings.Contains(line, "(tmos)") ||
+			strings.Contains(line, "(tm os)") ||
+			strings.Contains(line, "( tmos)") ||
+			strings.Contains(line, "(tmos )") ||
 			strings.HasPrefix(line, cmd) {
 			continue
 		}
